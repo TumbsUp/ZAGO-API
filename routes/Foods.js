@@ -1,0 +1,63 @@
+const express = require('express')
+const router  = express.Router()
+const Food    = require('../models/Foods')
+
+// GET ALL — /api/food
+router.get('/', async (req, res) => {
+  try {
+    const items = await Food.find()
+    res.json(items)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+// GET ONE — /api/food/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const item = await Food.findById(req.params.id)
+    if (!item) return res.status(404).json({ error: 'Item not found' })
+    res.json(item)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+// CREATE — /api/food
+router.post('/', async (req, res) => {
+  try {
+    const item = new Food(req.body)
+    const saved = await item.save()
+    res.status(201).json(saved)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+})
+
+// UPDATE — /api/food/:id
+router.put('/:id', async (req, res) => {
+  try {
+    const updated = await Food.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true } // 'new' returns the updated doc
+    )
+    if (!updated) return res.status(404).json({ error: 'Item not found' })
+    res.json(updated)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+})
+
+// DELETE — /api/food/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Food.findByIdAndDelete(req.params.id)
+    if (!deleted) return res.status(404).json({ error: 'Item not found' })
+    res.json({ message: 'Item deleted successfully' })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+module.exports = router
