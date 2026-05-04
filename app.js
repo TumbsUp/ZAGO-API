@@ -12,6 +12,9 @@ const foodRouter = require('./routes/Foods')
 const drinksRouter = require('./routes/Drinks')
 const newsRouter = require('./routes/News')
 
+const authRouter = require('./routes/Auth')
+const auth       = require('./middleware/auth')
+
 var app = express();
 
 app.use(logger('dev'));
@@ -30,6 +33,8 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB error:', err))
 
+
+app.use('/auth', authRouter)  
 app.use('/', indexRouter);
 app.use('/food', foodRouter);
 app.use('/drinks', drinksRouter);
