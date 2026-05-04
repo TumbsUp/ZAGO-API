@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 
 const NewsSchema = new mongoose.Schema(
   {
-    text: { type: String, required: true },
-    img1: { type: String, required: true },
-    img2: { type: String, required: true },
+    id:    { type: String, required: true },
+    title: { type: String, required: true },
+    description:  { type: String, required: true },
+    image:  { type: String, required: true },
   },
   { timestamps: true }
 )

@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-// GET ONE — /api/food/:id
+// GET ONE — /api/foods/:id
 router.get('/:id', async (req, res) => {
   try {
     const item = await Food.findById(req.params.id)
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// CREATE — /api/food
+// CREATE — /a
 router.post('/', async (req, res) => {
   try {
     const item = new Food(req.body)
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-// UPDATE — /api/food/:id
+// UPDATE — /api/foods/:id
 router.put('/:id', async (req, res) => {
   try {
     const updated = await Food.findByIdAndUpdate(
@@ -49,7 +49,7 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// DELETE — /api/food/:id
+// DELETE — /api/foods/:id
 router.delete('/:id', async (req, res) => {
   try {
     const deleted = await Food.findByIdAndDelete(req.params.id)
